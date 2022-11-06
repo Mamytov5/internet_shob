@@ -7,10 +7,12 @@ const Wishlist = () => {
 
     return (
         <div>
-            <div className="flex flex-row flex-wrap  ">
+            <div className="flex flex-row flex-wrap wishlist_shop">
                 {
                     Wishlist.map(el => (
-                        <WishlistCard product={el} key={el.id}/>
+                        <div className="wishlist_shops">
+                            <WishlistCard product={el} key={el.id}/>
+                        </div>
                     ))
                 }
             </div>

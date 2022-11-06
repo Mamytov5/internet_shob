@@ -3,7 +3,7 @@ import {
     ADD_TO_WISHLIST, CHANGE_CURRENCY,
     DECREASE_QUANTITY,
     DELETE_FROM_BASKET, DELETE_FROM_WISHLIST,
-    GET_PRODUCTS
+    GET_PRODUCTS, GET_SINGLE_PRODUCT
 } from "./types";
 
 
@@ -11,7 +11,7 @@ const initialState = {
     products: [],
     singleItem: {},
     Wishlist: [],
-    basket: [],
+    basket:JSON.parse(localStorage.getItem("basket")) || [],
     currencies: {
         RUB: 1,
         KGS: 1.11,
@@ -32,6 +32,8 @@ export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCTS:
             return {...state, products: action.payload}
+        case GET_SINGLE_PRODUCT:
+            return {...state,singleItem:action.payload}
         case ADD_TO_BASKET: {
             const foundProduct = state.basket.find(el => el.id === action.payload.id)
             if (foundProduct) {
@@ -43,7 +45,6 @@ export const reducer = (state = initialState, action) => {
             }
             return {...state, basket: [...state.basket, {...action.payload, quantity: 1}]}
         }
-
         case DELETE_FROM_BASKET:
             return {...state, basket: state.basket.filter(el => el.id !== action.payload)}
         case DECREASE_QUANTITY:

@@ -4,43 +4,48 @@ import {faBagShopping, faHeart, faCheck} from "@fortawesome/free-solid-svg-icons
 import {useDispatch, useSelector} from "react-redux";
 import {ADD_TO_BASKET} from "../redux/types";
 import {addToBasket, deleteFromBasket, deleteWishlist, likedProduct} from "../redux/actions";
+import {Link} from "react-router-dom";
 
 const Card = ({product}) => {
     const dispatch = useDispatch()
-    const {basket,currencies,defaultCurrency,currencySymbol} = useSelector(s => s)
+    const {basket, currencies, defaultCurrency, currencySymbol} = useSelector(s => s)
 
-    const cost =currencies[defaultCurrency] * product.price
+    const cost = currencies[defaultCurrency] * product.price
     const {Wishlist} = useSelector(s => s)
     const item = Wishlist.find(el => el.id === product.id)
     const inbasketProduct = basket.find(el => el.id === product.id)
 
-    useEffect(()=>{
+    useEffect(() => {
 
-    },[dispatch])
+    }, [dispatch])
     return (
-        <div className="basis-1/4 p-5  ">
-            <div className="max-w-sm rounded overflow-hidden shadow-lg p-5">
+        <div className="basis-1/4 p-5 image-size ">
+            <div className="max-w-sm rounded overflow-hidden shadow-lg p-5 ">
+                <Link to={`/products/product-info/${product.id}`}>
+                    <img className="w-full image-size__img"
+                         src={product.image} alt="Sunset in the mountains"/>
+                </Link>
                 <FontAwesomeIcon icon={faCheck}/>
-                <img className="w-full "
-
-                     src={product.image} alt="Sunset in the mountains"/>
                 <div className="px-6 py-4">
                     <div className="font-bold text-xs mb-2 ">{product.title}</div>
                     <p>{cost}{currencySymbol[defaultCurrency]}</p>
-
                 </div>
                 <div>
                     <button
                         onClick={() => {
-                            dispatch(addToBasket(product))
+                            return inbasketProduct ? null : dispatch(addToBasket(product))
                         }}
                         className="text-white px-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         {
-                            inbasketProduct ? <FontAwesomeIcon icon={faCheck} className="text-white"/> : <FontAwesomeIcon icon={faBagShopping} className="text-white"/>
+                            inbasketProduct ? <span>
+                                <Link to="/basket">
+                                   <FontAwesomeIcon icon={faCheck} className="text-white"/> <span
+                                    className="text-white mx-1">перейти в корзину</span>
+                                </Link>
+                            </span> :
+                                <FontAwesomeIcon icon={faBagShopping} className="text-white"/>
                         }
-
                     </button>
-
                     <button
                         onClick={() => {
                             return item ? item.liked ?
@@ -59,7 +64,7 @@ const Card = ({product}) => {
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#магазин</span>
                     <span
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#весна</span>
-                    <span
+                     <span
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#скидки</span>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import Product from "./component/Product";
 import Contact from "./component/Contact";
 import Basket from "./component/Basket";
 import Wishlist from "./component/Wishlist";
+import SingleProduct from "./component/SingleProduct";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/basket" element={<Basket/>}/>
                 <Route path="/Wishlist" element={<Wishlist/>}/>
+                <Route path="/products/product-info/:id" element={<SingleProduct/>}/>
             </Routes>
         </div>
     );

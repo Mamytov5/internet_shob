@@ -32,7 +32,7 @@ const BasketItem = ({el}) => {
             </td>
             <td className="px-6 py-4">
                 {
-                    el.price * el.quantity * currencies[defaultCurrency]
+                    el?.price * el?.quantity * currencies[defaultCurrency]
 
                 }
                 {
